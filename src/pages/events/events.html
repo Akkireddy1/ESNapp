@@ -14,5 +14,19 @@
 
 
 <ion-content padding>
+  <ion-card (click)="goToEvent(event.event)" class="blurred-title-card" *ngFor="let event of events | async">
+  <div class="card-image" [style.background-image]="'url(' + event.src + ')'"  ></div>
 
+  <div class="card-title-background">
+    <span [style.background-image]="'url(' + event.src + ')'" ></span>
+  </div>
+
+  <div class="card-title">
+    <h1>
+      {{event.name}}
+    </h1>
+    <div class="date-container"><p class="date"><b>{{event.date}}</b></p> <p class="hour"><b>{{event.time}}h</b></p>  </div>
+    
+  </div>
+  </ion-card>
 </ion-content>

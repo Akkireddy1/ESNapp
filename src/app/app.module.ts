@@ -6,6 +6,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { EventsPage } from '../pages/events/events';
 import { MapPage } from '../pages/map/map';
 import { GalleryPage } from '../pages/gallery/gallery';
+import {MapProvider} from '../providers/map-provider';
 
 // Import the AF2 Module
 import { AngularFireModule } from 'angularfire2';
@@ -44,6 +45,6 @@ export const firebaseConfig = {
     MapPage,
     GalleryPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, MapProvider]
 })
 export class AppModule {}

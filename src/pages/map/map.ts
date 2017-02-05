@@ -1,22 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { MapProvider } from '../../providers/map-provider';
 
-/*
-  Generated class for the Map page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-map',
   templateUrl: 'map.html'
 })
 export class MapPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  @ViewChild('map') mapElement;
+  map: any;
 
+  constructor(public navCtrl: NavController, public navParams: NavParams,public mapService: MapProvider) {}
+
+/// TODO SPREMENI IN PREMAKNI V PROVIDERJA
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
+    this.map=this.mapService.initMap(this.mapElement);
   }
 
 }

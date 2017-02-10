@@ -14,5 +14,36 @@
 
 
 <ion-content> 
-  <div #map id="map"></div>
+  <div #map id="map" style="height: 70%; width: 100%"></div>
+
+  <ion-grid style="height: 30%;">
+    
+      <ion-row>
+      <ion-col width-50>
+       <button ion-button block round [clear]="!selectedLocations.faculties" (click)="toggleSelection('faculty')">Faculties</button>
+      </ion-col>
+
+      <ion-col width-50>
+        <button ion-button block round [clear]="!selectedLocations.restaurants" (click)="toggleSelection('restaurant')">Restaurants</button>
+      </ion-col>
+    </ion-row>
+      <ion-row>
+      <ion-col width-50>
+       <button ion-button block round [clear]="!selectedLocations.city" (click)="toggleSelection('city')">City points</button>
+      </ion-col>
+
+      <ion-col width-50>
+        <button ion-button block round [clear]="!selectedLocations.activities" (click)="toggleSelection('activity')">What to do?</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col width-50>
+       <button ion-button block round [clear]="!selectedLocations.dorms" (click)="toggleSelection('dorm')">Dorms</button>
+      </ion-col>
+
+      <ion-col width-50>
+        <button ion-button block round [clear]="!selectedLocations.bars" (click)="toggleSelection('bar')">Bars</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

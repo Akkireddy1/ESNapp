@@ -20,7 +20,7 @@ export class MapProvider {
   }
 
 
-  initMap(mapElement: any, locations: any[]) {
+  initMap(mapElement: any, firebaseLocations: any) {
     //Maribor latlng setting
     let latlng = new google.maps.LatLng(46.554650, 15.645881);
 
@@ -29,32 +29,42 @@ export class MapProvider {
       zoom: 13
     };
     this.map = new google.maps.Map(mapElement.nativeElement, mapOptions);
-    if (locations.length) {
-      console.log("locations not empty");
-      this.createMarkers(locations);
-    }
-    this.setMarkerIcon(this.markers,"http://megaicons.net/static/img/icons_sizes/8/178/32/catering-restaurant-icon.png");
-    //this.showMarkers("restaurant");
-    //this.showAllMarkers();
+
+    this.setLocations(firebaseLocations);
+    //console.log(locations[0].title);
+    //this.setMarkerIcon(this.markers,"http://megaicons.net/static/img/icons_sizes/8/178/32/catering-restaurant-icon.png");
+    
     return this.map;
   }
 
+   //FirebaseListObservable<any> 
+  setLocations(firebaseLocations: any){
+    firebaseLocations.subscribe(snapshot=>{
+      snapshot.forEach(location=>{
+        console.log(location.title);
+        this.createMarker(location);
+      });
+    });
+  }
+
   //if picUrl is empty it shows normal icon
-  createMarkers(locations: any[]) {
-    for (let location of locations) {
+  createMarker(location: any) {
+    console.log(location.latitude);
       let marker = new google.maps.Marker({
-        position: location.position,
-        title: 'Your favorite city!',
-        type:location.type //TODO get from location object
+        position: new google.maps.LatLng(location.latitude, location.longitude),
+        title: location.title,
+        type:location.type,
+        description:location.description,
+        address:location.address,
+        image:location.src
       });
        if (location.type != undefined) {
         this.setMarkerIcon(marker, location.type)
       }
       this.markers.push(marker);
-
-     
-    }
   }
+
+ 
 
   showAllMarkers() {
     for (let marker of this.markers) {
@@ -69,9 +79,11 @@ export class MapProvider {
     }
   }
 
-  hideMarkers(markers: any[]) {
-    for (let marker of markers) {
-      marker.setMap(null);
+  hideMarkers(type:String) {
+    for (let marker of this.markers){
+      if(type==marker.type){
+        marker.setMap(null);
+      }
     }
   }
   setMarkerIcon(marker:any, markerType:any) {

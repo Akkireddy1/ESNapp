@@ -21,7 +21,7 @@ export class EventsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EventsPage');
+
   }
 
 }

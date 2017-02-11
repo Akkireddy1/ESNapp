@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { MapProvider } from '../../providers/map-provider';
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
+
 
 declare var google;
 
@@ -12,21 +14,23 @@ export class MapPage {
 
   @ViewChild('map') mapElement;
   map: any;
+  observableLocations: FirebaseListObservable<any>;
   private selectedLocations: any = { faculties: false, bars: false, restaurants: false, city: false, activities: false, dorms: false };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public mapService: MapProvider) {
-    
+  constructor(public navCtrl: NavController, public navParams: NavParams,public mapService: MapProvider, af: AngularFire) {
+    this.observableLocations=af.database.list('/locations');
   }
 
-/// TODO SPREMENI IN PREMAKNI V PROVIDERJA
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
-    this.map=this.mapService.initMap(this.mapElement, this.loadLocations());
+    this.map=this.mapService.initMap(this.mapElement, this.observableLocations);
   }
 
 
   //get all google locations for creating a markers
   loadLocations(){
+    console.log("AF locations "+this.observableLocations);
     var locations=[
       {
       position:new google.maps.LatLng(46.554650, 15.645881),
@@ -42,7 +46,7 @@ export class MapPage {
     }
     ]
     console.log("locations loaded: "+locations[0].position);
-    return locations;
+    
   }
 
   toggleSelection(type: string) {
@@ -53,7 +57,7 @@ export class MapPage {
           this.mapService.showMarkers(type);
         } else if (this.selectedLocations.bars == true) {
           this.selectedLocations.bars = false;
-          this.mapService.showMarkers(type);
+          this.mapService.hideMarkers(type);
         }
 
         break;
@@ -63,7 +67,7 @@ export class MapPage {
           this.mapService.showMarkers(type);
         } else if (this.selectedLocations.faculties == true) {
           this.selectedLocations.faculties = false;
-          this.mapService.showMarkers(type);
+          this.mapService.hideMarkers(type);
         }
         break;
 
@@ -73,7 +77,7 @@ export class MapPage {
           this.mapService.showMarkers(type);
         } else if (this.selectedLocations.restaurants == true) {
           this.selectedLocations.restaurants = false;
-          this.mapService.showMarkers(type);
+          this.mapService.hideMarkers(type);
         }
         break;
 
@@ -83,7 +87,7 @@ export class MapPage {
           this.mapService.showMarkers(type);
         } else if (this.selectedLocations.city == true) {
           this.selectedLocations.city = false;
-          this.mapService.showMarkers(type);
+          this.mapService.hideMarkers(type);
         }
         break;
 
@@ -93,7 +97,7 @@ export class MapPage {
           this.mapService.showMarkers(type);
         } else if (this.selectedLocations.activities == true) {
           this.selectedLocations.activities = false;
-          this.mapService.showMarkers(type);
+          this.mapService.hideMarkers(type);
         }
         break;
 
@@ -103,7 +107,7 @@ export class MapPage {
           this.mapService.showMarkers(type);
         } else if (this.selectedLocations.dorms == true) {
           this.selectedLocations.dorms = false;
-          this.mapService.showMarkers(type);
+          this.mapService.hideMarkers(type);
         }
         break;
 

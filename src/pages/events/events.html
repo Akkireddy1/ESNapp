@@ -14,7 +14,7 @@
 
 
 <ion-content padding>
-  <ion-card (click)="goToEvent(event.event)" class="blurred-title-card" *ngFor="let event of events | async">
+  <ion-card  class="blurred-title-card" *ngFor="let event of events | async" (click)="goToEvent(event)">
   <div class="card-image" [style.background-image]="'url(' + event.src + ')'"  ></div>
 
   <div class="card-title-background">

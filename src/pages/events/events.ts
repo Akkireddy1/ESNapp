@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import { EventDetailsPage } from '../event-details/event-details';
 
 /*
   Generated class for the Events page.
@@ -24,4 +25,10 @@ export class EventsPage {
 
   }
 
+  goToEvent(event){
+    console.log(event.name);
+    this.navCtrl.push(EventDetailsPage, {
+                      event: event
+    });
+  }
 }

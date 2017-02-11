@@ -21,32 +21,9 @@ export class MapPage {
     this.observableLocations=af.database.list('/locations');
   }
 
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
     this.map=this.mapService.initMap(this.mapElement, this.observableLocations);
-  }
-
-
-  //get all google locations for creating a markers
-  loadLocations(){
-    console.log("AF locations "+this.observableLocations);
-    var locations=[
-      {
-      position:new google.maps.LatLng(46.554650, 15.645881),
-      type:'restaurant'
-    },
-    {
-      position:new google.maps.LatLng(46.5584864, 15.6449621),
-      type:'restaurant'
-    },
-    {
-      position:new google.maps.LatLng(46.5628445, 15.6298367),
-      type:'restaurant'
-    }
-    ]
-    console.log("locations loaded: "+locations[0].position);
-    
   }
 
   toggleSelection(type: string) {
@@ -110,7 +87,6 @@ export class MapPage {
           this.mapService.hideMarkers(type);
         }
         break;
-
     }
   }
 

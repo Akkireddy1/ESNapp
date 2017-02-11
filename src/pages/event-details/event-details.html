@@ -7,12 +7,42 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>eventDetails</ion-title>
+    <ion-title>{{event.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <ion-card>
+
+  <img [src]="event.src">
+  
+
+  <ion-item>
+    <h1>{{event.name}}</h1>
+   
+  </ion-item>
+  <ion-item>
+    <ion-icon name="clock" item-left large></ion-icon>
+     
+    <h2>When:</h2>
+    <p>{{event.date}}</p>
+    <p>{{event.time}}h</p>
+    
+  </ion-item>
+
+  <ion-item>
+    <ion-icon name="pin" item-left large ></ion-icon>
+    <h2>Where: </h2>
+    <p><b>{{event.location}}</b></p>
+    <p>{{event.address}}</p>
+    <!--<ion-badge item-right><button (click)="showEventOnMap()" ><ion-icon name="pin"></ion-icon></button></ion-badge>-->
+  </ion-item>
+  <ion-item>
+    <h2>What:</h2>
+    <p>{{event.description}}</p>
+  </ion-item>
+</ion-card>
 
 </ion-content>

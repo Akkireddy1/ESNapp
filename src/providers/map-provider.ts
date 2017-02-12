@@ -82,9 +82,12 @@ export class MapProvider {
 
  
 
-  showAllMarkers(map:any) {
+  showAllEvents(map:any) {
     for (let marker of this.markers) {
-      marker.setMap(map);
+      if(marker.type=="event"){
+        marker.setMap(map);
+      }
+      
     }
   }
   showMarkers(map:any,type:String){

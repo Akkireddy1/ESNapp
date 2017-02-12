@@ -8,6 +8,7 @@ import { EventDetailsPage } from '../pages/event-details/event-details';
 import { MapPage } from '../pages/map/map';
 import { GalleryPage } from '../pages/gallery/gallery';
 import {MapProvider} from '../providers/map-provider';
+import {EventsMapPage} from '../pages/events-map/events-map';
 
 // Import the AF2 Module
 import { AngularFireModule } from 'angularfire2';
@@ -32,7 +33,8 @@ export const firebaseConfig = {
     EventsPage,
     MapPage,
     GalleryPage,
-    EventDetailsPage
+    EventDetailsPage,
+    EventsMapPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -46,7 +48,8 @@ export const firebaseConfig = {
     EventsPage,
     MapPage,
     GalleryPage,
-    EventDetailsPage
+    EventDetailsPage,
+    EventsMapPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, MapProvider]
 })

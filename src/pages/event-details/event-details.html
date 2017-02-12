@@ -33,7 +33,7 @@
   </ion-item>
 
   <ion-item>
-    <ion-icon name="pin" item-left large ></ion-icon>
+    <ion-icon name="pin" item-left large (click)="goToEventMap(event.location)"></ion-icon>
     <h2>Where: </h2>
     <p><b>{{event.location}}</b></p>
     <p>{{event.address}}</p>

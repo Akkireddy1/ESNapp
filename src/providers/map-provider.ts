@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 declare var google;
 /*
@@ -11,9 +12,13 @@ declare var google;
 @Injectable()
 export class MapProvider {
 
-  map: any;
   markers: any[] = [];
-  icons: any[]= [{type:"restaurant",url:"http://megaicons.net/static/img/icons_sizes/8/178/32/catering-restaurant-icon.png"}];
+  icons: any[]= [{type:"restaurant",url:"assets/mapIcons/restaurant.png",scaledSize:new google.maps.Size(22, 32)},
+  {type:"bar",url:"assets/mapIcons/bar.png",scaledSize:new google.maps.Size(22, 32)},
+  {type:"city",url:"assets/mapIcons/city.png",scaledSize:new google.maps.Size(22, 32)},
+  {type:"dorm",url:"assets/mapIcons/dorm.png",scaledSize:new google.maps.Size(22, 32)},
+  {type:"faculty",url:"assets/mapIcons/faculty.png",scaledSize:new google.maps.Size(22, 32)},
+  {type:"interest",url:"assets/mapIcons/interest.png",scaledSize:new google.maps.Size(22, 32)}];
 
   constructor() {
     console.log('Hello MapProvider Provider');
@@ -21,30 +26,41 @@ export class MapProvider {
 
 
   initMap(mapElement: any, firebaseLocations: any) {
-    //Maribor latlng setting
+    
+    
+      //Maribor latlng setting
     let latlng = new google.maps.LatLng(46.554650, 15.645881);
 
     let mapOptions = {
       center: latlng,
-      zoom: 13
+      zoom: 13,
+      styles:[{
+            featureType: 'poi.business',
+            elementType: 'labels.icon',
+            stylers: [{visibility: 'off'}]
+          }]
     };
-    this.map = new google.maps.Map(mapElement.nativeElement, mapOptions);
+    let map = new google.maps.Map(mapElement.nativeElement, mapOptions);
 
-    this.setLocations(firebaseLocations);
-    //console.log(locations[0].title);
-    //this.setMarkerIcon(this.markers,"http://megaicons.net/static/img/icons_sizes/8/178/32/catering-restaurant-icon.png");
+    this.setLocations(firebaseLocations, map);
     
-    return this.map;
+    //this.setMarkerIcon(this.markers,"http://megaicons.net/static/img/icons_sizes/8/178/32/catering-restaurant-icon.png");
+    return Promise.resolve(map);
+
+    
   }
 
    //FirebaseListObservable<any> 
-  setLocations(firebaseLocations: any){
-    firebaseLocations.subscribe(snapshot=>{
-      snapshot.forEach(location=>{
+  setLocations(firebaseLocations: any, map:any){
+
+      firebaseLocations.forEach(location=>{
         console.log(location.title);
         this.createMarker(location);
+         
       });
-    });
+      
+    
+   
   }
 
   //if picUrl is empty it shows normal icon
@@ -66,15 +82,15 @@ export class MapProvider {
 
  
 
-  showAllMarkers() {
+  showAllMarkers(map:any) {
     for (let marker of this.markers) {
-      marker.setMap(this.map);
+      marker.setMap(map);
     }
   }
-  showMarkers(type:String){
+  showMarkers(map:any,type:String){
     for (let marker of this.markers){
       if(type==marker.type){
-        marker.setMap(this.map);
+        marker.setMap(map);
       }
     }
   }
@@ -89,7 +105,7 @@ export class MapProvider {
   setMarkerIcon(marker:any, markerType:any) {
       for (let icon of this.icons){
         if (markerType==icon.type){
-          marker.setIcon(icon.url);
+          marker.setIcon(icon);
         }
       }
      

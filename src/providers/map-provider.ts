@@ -25,7 +25,7 @@ export class MapProvider {
   }
 
 
-  initMap(mapElement: any, firebaseLocations: any) {
+  initMap(mapElement: any, locations: any) {
     
     
       //Maribor latlng setting
@@ -42,7 +42,7 @@ export class MapProvider {
     };
     let map = new google.maps.Map(mapElement.nativeElement, mapOptions);
 
-    this.setLocations(firebaseLocations, map);
+    this.setLocations(locations, map);
     
     //this.setMarkerIcon(this.markers,"http://megaicons.net/static/img/icons_sizes/8/178/32/catering-restaurant-icon.png");
     return Promise.resolve(map);
@@ -51,9 +51,9 @@ export class MapProvider {
   }
 
    //FirebaseListObservable<any> 
-  setLocations(firebaseLocations: any, map:any){
+  setLocations(locations: any, map:any){
 
-      firebaseLocations.forEach(location=>{
+      locations.forEach(location=>{
         console.log(location.title);
         this.createMarker(location);
          
@@ -74,8 +74,10 @@ export class MapProvider {
         address:location.address,
         image:location.src
       });
-       if (location.type != undefined) {
+       if (location.type != undefined && location.type !="event") {
         this.setMarkerIcon(marker, location.type)
+      }else if (location.type=="event"){
+        this.setMarkerImage(marker);
       }
       this.markers.push(marker);
   }
@@ -111,7 +113,8 @@ export class MapProvider {
           marker.setIcon(icon);
         }
       }
-     
-    
+  }
+  setMarkerImage(marker:any){
+    let imageIcon={url:location,scaledSize:new google.maps.Size(22, 32)}
   }
 }

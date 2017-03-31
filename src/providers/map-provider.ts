@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+//import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 declare var google;
@@ -115,6 +115,6 @@ export class MapProvider {
       }
   }
   setMarkerImage(marker:any){
-    let imageIcon={url:location,scaledSize:new google.maps.Size(22, 32)}
+    //let imageIcon={url:location,scaledSize:new google.maps.Size(22, 32)}
   }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
 
 /*
   Generated class for the EventDetails page.
@@ -15,20 +15,25 @@ import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 
 export class EventDetailsPage {
   event: any;
-  location: FirebaseObjectObservable<any>;
+  location: FirebaseListObservable<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFire) {
     this.event=this.navParams.get("event");
     console.log("event's location's id: "+this.event.location);
-    this.location=af.database.object('/location/'+this.event.location, { preserveSnapshot: true });///TODO i wont need to get locations here, I ll get location id with event.location and i ll get map wiht all markers already created
+    this.location=af.database.list('/locations',{
+      query: {
+        orderByChild: "uid",
+        equalTo: this.event.location
+      }
+    });
     this.location.subscribe(snapshot=>{
-      snapshot
+      console.log(snapshot);
     })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EventDetailsPage');
-    console.log("location: "+this.location);
+
   }
 
 }

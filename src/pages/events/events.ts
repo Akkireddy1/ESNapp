@@ -18,17 +18,18 @@ export class EventsPage {  ///////////////////////////////TODO init map only wit
 
   constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFire) {
     this.events = af.database.list('/events');
-    
+
     this.observableLocations=af.database.list('/locations', {
       query: {
         orderByChild: 'type',
         equalTo: 'event'
       }
     });
+    console.log(this.observableLocations);
     //locations array is created here that reduce  initializing map time when click on button
     this.observableLocations.subscribe(snapshot=>{
       snapshot.forEach(location=>{
-        this.locations.push(location); 
+        this.locations.push(location);
         console.log("location pushed: "+location.title);
       });
       this.buttonDisabled=false;
